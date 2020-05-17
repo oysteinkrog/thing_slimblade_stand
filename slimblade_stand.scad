@@ -5,7 +5,7 @@ use <thing_libutils/shapes.scad>
 
 test = false;
 $preview_mode = false;
-round_r = test ? 0*mm : 1*mm;
+round_r = test ? 0*mm : 0.5*mm;
 
 // high quality etc
 is_build = true;
@@ -13,7 +13,7 @@ is_build = true;
 // minimum size of a fragment
 // resolution of any round object (segment length)
 // Because of this variable very small circles have a smaller number of fragments than specified usi#  6 // The default value is 2.
-$fs = is_build ? 0.5 : 1;
+$fs = is_build ? 0.1 : 1;
 
 // minimum angle for a fragment.
 // The default value is 12 (i.e. 30 fragments for a full circle)
@@ -22,13 +22,13 @@ $fa = is_build ? 4 : 16;
 
 feet_dist_front_x = 63.0*mm;
 feet_dist_back_x = 81.0*mm;
-feet_dist_y = 118*mm;
+feet_dist_y = 117.5*mm;
 
 // degrees
-tilt_ = [-10,0,0];
+tilt_ = [-5,0,0];
 tilt = test ? [0,0,0] : tilt_;
 
-feet_size=[15.3*mm,6.2*mm,1*mm];
+feet_size=[15.3*mm,6.15*mm,1*mm];
 padding = [10*mm, 10*mm, 2*mm];;
 width = feet_size.x + padding.x + max(feet_dist_front_x, feet_dist_back_x);
 depth = feet_size.y + padding.y + feet_dist_y;
@@ -102,9 +102,10 @@ module stand(part)
         ty(size_base.y/2)
         for(x=[-1,1])
         for(y=[-1,1])
-        tx(x*(size_base.x/2-padding.x/2-5*mm))
-        ty(y*(size_base.y/2-padding.y/2-5*mm))
-        cylindera(h=1*mm, d=10.3*mm, align=-Z);
+        tx(x*(size_base.x/2-padding.x/2-1*mm))
+        ty(y*(size_base.y/2-padding.y/2-(y==-1?2*mm:8*mm)))
+        tz(-.3)
+        cylindera(h=2.0, d=10.9*mm, align=Z);
     }
     else if(part=="vit")
     {
